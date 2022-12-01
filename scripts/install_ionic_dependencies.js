@@ -62,18 +62,22 @@ const installIonicDependencies = function () {
             console.log(`Ionic dependencies installed for ${DEST_PATH}:`);
             console.log(output);
         });
+
+    
+    process.chdir('../../..');
 };
 
 destinations = ['ionic', 'ionic/ngx', 'ionic/v4']
 
 const installDependencies = (targets) => {
+    if (!shouldInstallIonicDependencies()) {
+        console.log(`Ionic dependencies install skipped for ${DEST_PATH}`);
+        return;
+    }
+
     for (i in targets) {
         DEST_PATH = targets[i];
-        if (shouldInstallIonicDependencies()) {
-            installIonicDependencies();
-        } else {
-            console.log(`Ionic dependencies install skipped for ${DEST_PATH}`);
-        }
+        installIonicDependencies();
     }
 }
 
