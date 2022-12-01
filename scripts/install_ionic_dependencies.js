@@ -66,9 +66,6 @@ const installIonicDependencies = async function () {
         .then(() => {
             process.chdir(fullBasePath);
         })
-
-    
-    
 };
 
 destinations = ['ionic', 'ionic/ngx', 'ionic/v4']
@@ -85,7 +82,4 @@ const installDependencies = async (targets) =>  {
     }
 }
 
-installDependencies(destinations);
-
-
-
+await installDependencies(destinations);
