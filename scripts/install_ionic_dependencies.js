@@ -33,7 +33,7 @@ const shouldInstallIonicDependencies = function () {
     );
 };
 
-const installIonicDependencies = function () {
+const installIonicDependencies = async function () {
     const path = require('path');
     let fullDestPath = `${path.dirname(process.cwd())}/${DEST_PATH}`;
     const fullBasePath = process.cwd();
@@ -51,7 +51,7 @@ const installIonicDependencies = function () {
     }
 
     const npm = process.platform === 'win32' ? 'npm.cmd' : 'npm';
-    helpers
+    return helpers
         .execute(npm, ['install', '--loglevel', 'error', '--no-progress'])
         .catch(function (e) {
             helpers.logError('Failed to auto install Ionic dependencies!', e);
@@ -62,15 +62,18 @@ const installIonicDependencies = function () {
         .then(function (output) {
             console.log(`Ionic dependencies installed for ${DEST_PATH}:`);
             console.log(output);
-        });
+        })
+        .then(() => {
+            process.chdir(fullBasePath);
+        })
 
     
-    process.chdir(fullBasePath);
+    
 };
 
 destinations = ['ionic', 'ionic/ngx', 'ionic/v4']
 
-const installDependencies = (targets) => {
+const installDependencies = async (targets) =>  {
     if (!shouldInstallIonicDependencies()) {
         console.log(`Ionic dependencies install skipped for ${DEST_PATH}`);
         return;
@@ -78,7 +81,7 @@ const installDependencies = (targets) => {
 
     for (i in targets) {
         DEST_PATH = targets[i];
-        installIonicDependencies();
+        await installIonicDependencies();
     }
 }
 
