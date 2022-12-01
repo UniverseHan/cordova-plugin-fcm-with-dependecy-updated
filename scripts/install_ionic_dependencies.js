@@ -36,6 +36,7 @@ const shouldInstallIonicDependencies = function () {
 const installIonicDependencies = function () {
     const path = require('path');
     let fullDestPath = `${path.dirname(process.cwd())}/${DEST_PATH}`;
+    const fullBasePath = process.cwd();
     console.log(`fullDestPath is ${fullDestPath}`);
     fullDestPath = `${process.cwd()}/node_modules/cordova-plugin-fcm-with-dependecy-updated/${DEST_PATH}`;
     console.log(`changed path is ${fullDestPath}`)
@@ -64,7 +65,7 @@ const installIonicDependencies = function () {
         });
 
     
-    process.chdir('../../..');
+    process.chdir(fullBasePath);
 };
 
 destinations = ['ionic', 'ionic/ngx', 'ionic/v4']
