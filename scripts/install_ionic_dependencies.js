@@ -82,4 +82,4 @@ const installDependencies = async (targets) =>  {
     }
 }
 
-await installDependencies(destinations);
+installDependencies(destinations);
