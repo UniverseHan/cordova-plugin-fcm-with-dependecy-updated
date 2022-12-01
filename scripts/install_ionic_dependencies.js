@@ -1,9 +1,10 @@
 const helpers = require('./helpers');
-const DEST_PATH = process.argv[2];
+let DEST_PATH = '';
 
 const shouldInstallIonicDependencies = function () {
     const fs = require('fs');
-    const packageFilePath = `${process.cwd()}/../../../package.json`;
+    const packageFilePath = `${process.cwd()}/package.json`;
+    console.log(`package file path is [${packageFilePath}]`);
     if (!helpers.fileExists(packageFilePath)) {
         helpers.logWarning('package.json was not found.');
         helpers.logWarning('Ionic dependencies omission cannot be safely skipped.');
@@ -34,7 +35,10 @@ const shouldInstallIonicDependencies = function () {
 
 const installIonicDependencies = function () {
     const path = require('path');
-    const fullDestPath = `${path.dirname(process.cwd())}/${DEST_PATH}`;
+    let fullDestPath = `${path.dirname(process.cwd())}/${DEST_PATH}`;
+    console.log(`fullDestPath is ${fullDestPath}`);
+    fullDestPath = `${process.cwd()}/node_modules/cordova-plugin-fcm-with-dependecy-updated/${DEST_PATH}`;
+    console.log(`changed path is ${fullDestPath}`)
     try {
         process.chdir(fullDestPath);
     } catch (error) {
@@ -60,8 +64,20 @@ const installIonicDependencies = function () {
         });
 };
 
-if (shouldInstallIonicDependencies()) {
-    installIonicDependencies();
-} else {
-    console.log(`Ionic dependencies install skipped for ${DEST_PATH}`);
+destinations = ['ionic', 'ionic/ngx', 'ionic/v4']
+
+const installDependencies = (targets) => {
+    for (i in targets) {
+        DEST_PATH = targets[i];
+        if (shouldInstallIonicDependencies()) {
+            installIonicDependencies();
+        } else {
+            console.log(`Ionic dependencies install skipped for ${DEST_PATH}`);
+        }
+    }
 }
+
+installDependencies(destinations);
+
+
+
