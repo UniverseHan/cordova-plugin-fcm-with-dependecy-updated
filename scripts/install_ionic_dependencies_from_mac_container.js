@@ -1,3 +1,6 @@
+#!/usr/bin/env node
+'use strict';
+
 const helpers = require('./helpers');
 let DEST_PATH = '';
 
@@ -51,24 +54,18 @@ const installIonicDependencies = async function () {
     }
 
     const npm = process.platform === 'win32' ? 'npm.cmd' : 'npm';
-    return helpers
-        .execute(npm, ['install', '--loglevel', 'error', '--no-progress'])
-        .catch(function (e) {
-            helpers.logError('Failed to auto install Ionic dependencies!', e);
-            helpers.logError(
-                `Please run \`cd node_modules/cordova-plugin-fcm-with-dependecy-updated/${DEST_PATH}; npm install\` manually`
-            );
-        })
-        .then(function (output) {
-            console.log(`Ionic dependencies installed for ${DEST_PATH}:`);
-            console.log(output);
-        })
-        .then(() => {
-            process.chdir(fullBasePath);
-        })
+    try {
+        const output = helpers.executeSync(npm, ['install', '--loglevel', 'error', '--no-progress'])
+        console.log(`Ionic dependencies installed for ${DEST_PATH}:`);
+        console.log(output);
+        process.chdir(fullBasePath);
+        
+    }catch (error) {
+        console.error(error);
+    }
 };
 
-destinations = ['ionic', 'ionic/ngx', 'ionic/v4']
+const destinations = ['ionic', 'ionic/ngx', 'ionic/v4']
 
 const installDependencies = async (targets) =>  {
     if (!shouldInstallIonicDependencies()) {
@@ -76,9 +73,11 @@ const installDependencies = async (targets) =>  {
         return;
     }
 
-    for (i in targets) {
+    for (let i in targets) {
         DEST_PATH = targets[i];
+        console.log(`before install ${DEST_PATH}`);
         await installIonicDependencies();
+        console.log(`after install ${DEST_PATH}`);
     }
 }
 

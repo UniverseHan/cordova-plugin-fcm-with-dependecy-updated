@@ -77,7 +77,7 @@
 		<source-file src="src/android/com/gae/scaffolder/plugin/FCMPluginActivity.java" target-dir="src/com/gae/scaffolder/plugin" />
 		<source-file src="src/android/com/gae/scaffolder/plugin/interfaces/OnFinishedListener.java" target-dir="src/com/gae/scaffolder/plugin/interfaces" />
 		<source-file src="src/android/com/gae/scaffolder/plugin/interfaces/TokenListeners.java" target-dir="src/com/gae/scaffolder/plugin/interfaces" />
-		
+
 		<hook src="scripts/copy_google_service_files.js" type="after_prepare" />
 		<hook src="scripts/copy_google_service_files.js" type="after_plugin_add" />
 		<hook src="scripts/install_ionic_dependencies.bat" type="after_plugin_install" />
@@ -136,7 +136,4 @@
 		<hook src="scripts/copy_google_service_files.js" type="after_plugin_add" />
 		<hook src="scripts/install_ionic_dependencies_from_mac_container.js" type="after_plugin_install" />
 	</platform>
-
-	
-	
 </plugin>

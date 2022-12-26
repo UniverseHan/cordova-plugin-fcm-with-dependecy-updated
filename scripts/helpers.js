@@ -90,3 +90,9 @@ exports.execute = function (command, args) {
         }
     });
 };
+
+
+exports.executeSync = function (command, args) {    
+    const spawnSync = require('child_process').spawnSync;
+    const result = spawnSync(command, args);
+};
